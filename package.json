@@ -1,0 +1,20 @@
+{
+  "name": "TPconvertisseurBD-CSV-JSON",
+  "version": "1.0.0",
+  "description": "",
+  "main": "CsvToBD.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parse": "^0.1.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "jquery": "^3.5.1",
+    "jsdom": "^16.4.0",
+    "mysql": "^2.18.1"
+  }
+}

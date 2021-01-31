@@ -1,0 +1,5 @@
+nom,prenom,nom_ville,cp
+BUGUET,Pascal,Paris 11,75011
+FERCHICHI,Youssef ,Paris 11,75011
+JULIEN,Willy ,Paris 12,75012
+AUBRY,Paul,Paris 12,75012

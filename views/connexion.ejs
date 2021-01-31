@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>connexion.ejs</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+</head>
+
+<body>
+    <h3>Connexion</h3>
+    <br>
+    <form method="get" action="/home">
+        <label for="host" class="etiquette">Host (adresse IP ou nom d'Hôte</label>
+        <input type="text" name="host" value="localhost" />
+        <br>
+        <label for="user" class="etiquette">User</label>
+        <input type="text" name="user" value="root" />
+        <br>
+        <label for="password" class="etiquette">Password</label>
+        <input type="password" name="password" />
+        <br>
+        <input type="submit" value="Se Connecter" id="connect" />
+    </form>
+
+</body>
+
+</html>

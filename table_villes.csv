@@ -1,0 +1,18 @@
+cp,nom_ville,site,photo,id_pays
+13000,Marseille,www.ma.net,marseille.jpg,033
+24200,Sarlat,null,sarlat.jpg,033
+24300,Carsac,null,null,033
+24400,Aillac,null,null,033
+59000,Lille,www.lille.fr,lille.jpg,033
+69000,LION,www.lyon.fr,lyon.jpg,033
+75011,Paris 11,www.paris.fr,paris.jpg,033
+75012,Paris 12,www.paris.fr,paris.jpg,033
+75019,Paris XIX,www.paris.fr,paris.jpg,033
+75021,Paris XXI,null,null,033
+78000,Versailles,null,versailles.jpg,033
+78680,Epône,null,null,033
+78970,Mézières,null,null,033
+94100,Vincennes,null,vincennes.jpg,033
+94200,St Mandé,null,saint_mande.jpg,033
+99391,ROME,null,rome.jpg,039
+99392,MILAN,null,milan.jpg,039
