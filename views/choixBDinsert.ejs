@@ -1,34 +1,17 @@
-<!DOCTYPE html>
-<html>
+<%- include ('partials/header') %>
+    <%- include ('partials/title') %>
 
-<head>
-    <title>choixBDinsert.ejs</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-</head>
-
-<body>
-    <h3>Choix de la BD dans laquelle ajouter des données</h3>
+    <h3>Choix de la BD dans laquelle ajouter les données</h3>
     
-    <form method="post" action="/choixTableInsert">
+    
+
+    <form method="post" action="/choixTableInsert" class="form-bd">
         <label for="bd_name">Nom de la Base de Données</label>
-        <select id="bd_name" name="bd_name" size=3>
+        <select id="bd_name" name="bd_name" size=5 required>
+            <!-- <option> -- Choisissez votre BDD -- </option> -->
             <%- optionsBD %>
         </select>
-        <input type="submit" value="Valider" id="btValider" />
+        <input type="submit" value="Valider" id="btValider" class="btn btn-validate" />
     </form>
 
-    <br>
-    <a href="/CRUD">Modifier une Base de donnée</a>
-    <br>
-    <a href="/choixFichierConvert">Insérer données à partir d'un fichier</a>
-    <br>
-    <br>
-    <a href="/home2">Back to Home</a>
-    <br>
-    <a href="/">Changer de connexion</a>
-
-    <script src="../jquery/jquery.js"></script>
-</body>
-
-</html>
+<%- include ('partials/footer') %>

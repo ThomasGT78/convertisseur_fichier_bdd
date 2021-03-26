@@ -14,8 +14,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
 
+var message = "init";
 var connexion;
 var connectHost;
+var connectPort = '3306' // '3306' '8081'
 var connectUser;
 var connectPassword;
 
@@ -59,7 +61,7 @@ app.get('/home', function (req, res) {
 
     connexion = mysql.createConnection({
         host: connectHost,
-        port: '3306',
+        port: connectPort,
         user: connectUser,
         password: connectPassword,
         database: ''
@@ -74,21 +76,21 @@ app.get('/home', function (req, res) {
     res.render('Home.ejs', { messageConnexion: messageConnexion });
 });
 
-/******************************
-**********   Vers la page home2.ejs   ***********
- ******************************/
+        /********************************
+*********   Vers la page home2.ejs      ***********
+        ********************************/
 app.get('/home2', function (req, res) {
 
     // On ne se reconnect pas ici, on revient juste sur la page d'accueil sans modifier la connexion
 
-    var messageConnexion = `vous êtes connecté sous user ${connectUser} et avec l'hôte ${connectHost}`
+    var messageConnexion = `Vous êtes connecté sous user ${connectUser} et avec l'hôte ${connectHost}`
     console.log('ligne 59 \n' + messageConnexion)
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.render('Home.ejs', { messageConnexion: messageConnexion });
 });
-/*************************************
-**********   Affichage Home et liste des BD  ***********
- ************************************/
+        /****************************************
+*********    Affichage Home et liste des BD     ***********
+         ***************************************/
 
 app.get('/choixBDconvert', function (req, res) {
     console.log('CONSOLE LIGNE 41: Vers la page Choix de la BD');
@@ -118,9 +120,9 @@ app.get('/choixBDconvert', function (req, res) {
 
 //-------------------------------------------------------------------------------------------
 
-/*************************************************
+        /*************************************************
 **********   Affichage choixTableConvert et les listes   **********
- *************************************************/
+        *************************************************/
 
 app.post('/choixTableConvert', function (req, res) {
     console.log('CONSOLE LIGNE 71: Vers la page Choix de la Table');
@@ -129,9 +131,9 @@ app.post('/choixTableConvert', function (req, res) {
     optionsBD = '';         // <option> à insérer
 
 
-    /*******************
-     *   Liste des BD  *
-     ******************/
+            /*******************
+             *   Liste des BD  *
+             ******************/
 
     connexion.query(`SELECT DISTINCT TABLE_SCHEMA FROM  information_schema.tables WHERE TABLE_TYPE = 'BASE TABLE';`, function (err, rows, fields) {
         // Erreur
@@ -144,9 +146,9 @@ app.post('/choixTableConvert', function (req, res) {
             } // for
         } // else
 
-        /***********************
-         *   Liste des Tables  *
-         **********************/
+                /***********************
+                 *   Liste des Tables  *
+                 **********************/
 
         connexion.query(`SELECT TABLE_NAME, TABLE_TYPE FROM  information_schema.tables WHERE TABLE_SCHEMA = ?;`, BDchoisie, function (err, rows) {
             // Erreur
@@ -177,9 +179,9 @@ app.post('/choixTableConvert', function (req, res) {
 
 }); //post
 
-/************************************************
+        /************************************************
 **********   CONVERSION DE LA TABLE + PAGE VALIDATION   **********
- ************************************************/
+        ************************************************/
 
 app.post('/validationConvert', function (req, res) {
 
@@ -250,14 +252,14 @@ app.post('/validationConvert', function (req, res) {
                 *   CRÉATION DU FICHIER    *
                 ***************************/
 
-                fs.writeFile(`table_${tableChoisie}.${formatToConvert}`, firstLine, function (err) {
+                fs.writeFile(`table/table_${tableChoisie}.${formatToConvert}`, firstLine, function (err) {
                     if (err) {
                         return console.error(err);
                     }
                     console.log("Données écrites !");
 
                     /// INSERTION DES DATA
-                    fs.appendFile(`table_${tableChoisie}.${formatToConvert}`, dataTab, function (err, fd) {
+                    fs.appendFile(`table/table_${tableChoisie}.${formatToConvert}`, dataTab, function (err, fd) {
                         if (err) {
                             return console.error(err);
                         }
@@ -304,7 +306,7 @@ app.post('/validationConvert', function (req, res) {
                 *   CRÉATION DU FICHIER    *
                 ***************************/
 
-                fs.writeFile(`table_${tableChoisie}.${formatToConvert}`, tabJson, function (err) {
+                fs.writeFile(`table/table_${tableChoisie}.${formatToConvert}`, tabJson, function (err) {
                     if (err) {
                         return console.error(err);
                     }
@@ -357,9 +359,9 @@ app.get('/choixBDinsert', function (req, res) {
 
 //-------------------------------------------------------------------------------------------
 
-/*************************************************
+        /*************************************************
 **********   Affichage choixTableConvert et les listes   **********
- *************************************************/
+        *************************************************/
 
 app.post('/choixTableInsert', function (req, res) {
     console.log('CONSOLE LIGNE 71: Vers la page Choix de la Table');
@@ -367,9 +369,9 @@ app.post('/choixTableInsert', function (req, res) {
     BDchoisie = req.body.bd_name;
     optionsBD = '';         // <option> à insérer
 
-    /*******************
-     *   Liste des BD  *
-     ******************/
+        /*******************
+         *   Liste des BD  *
+         ******************/
 
     connexion.query(`SELECT DISTINCT TABLE_SCHEMA FROM  information_schema.tables WHERE TABLE_TYPE = 'BASE TABLE';`, function (err, rows, fields) {
         // Erreur
@@ -422,7 +424,6 @@ app.post('/validationInsert', function (req, res) {
     // var nomFichier = 'table_villes.csv';
     // var separateur = ',';
 
-    var message;
 
     var nomColonne = "";        // donne les nom de colonne dans le sql
     var numberValues = "";      // ajoute les ?,?,? dans les values SQL
@@ -474,7 +475,26 @@ app.post('/validationInsert', function (req, res) {
                     var tabData = tabRow[i].trim().split(separateur)   // sépare sur le point-virgule
                     // console.log(`tabData, ligne 74:`)
                     // console.log(tabData)
-                } // else data des rows
+
+                            /************************
+                            *   REQUÊTE TO MYSQL    *
+                            ************************/
+
+                    // insert les données des lignes 1 par 1 à chaque boucle
+                    sql = `INSERT INTO ${BDchoisie}.${nomTable} (${nomColonne}) VALUES (${numberValues})`;
+                    connexion.query(sql, tabData, function (err, rows, fields) {
+                        if (err) { // Erreur !!!
+                            console.log('\nErreur d\'exécution de la requête !' + err);
+                            message = `Erreur: Les données n'ont pas été inséré dans la Base de Données`
+                        } // if Pas d'erreur
+                        else {  // Pas d'erreur
+                            message = `Les données ont été inséré dans la Base de Données: ${BDchoisie}, dans la table: ${nomTable}`
+                            console.log("message ligne 499")
+                            console.log(message)
+                        }
+                    }); // query
+
+                } // else i > 0 => data des rows
 
                 // console.log(`nomColonne, ligne 78:`)
                 // console.log(nomColonne)
@@ -482,31 +502,12 @@ app.post('/validationInsert', function (req, res) {
                 // console.log(`numberValues, ligne 82:`)
                 // console.log(numberValues + '\n')
 
-                /************************
-                *   REQUÊTE TO MYSQL    *
-                ************************/
-
-                if (i > 0) {       // ne renvoi pas le nom des colonnes mais justes les datas
-                    // insert les données des lignes 1 par 1 à chaque boucle
-                    sql = `INSERT INTO ${BDchoisie}.${nomTable} (${nomColonne}) VALUES (${numberValues})`;
-                    connexion.query(sql, tabData, function (err, rows, fields) {
-                        if (err) { // Erreur !!!
-                            console.log('\nErreur d\'exécution de la requête !' + err);
-                        } // if Pas d'erreur
-                        else {  // Pas d'erreur
-                            message = `Les données ont été inséré dans la Base de Données: ${BDchoisie}, dans la table: ${nomTable}`
-                            // console.log("message")
-                            // console.log(message)
-                        }
-                    }); // query
-                } // if ( i > 0 )
-
-                // console.log("message ligne 503")
-                // console.log(message)
+                console.log("message ligne 506")
+                console.log(message)
             } // for boucle dans le tableau de lignes
 
-            // console.log("message ligne 507")
-            // console.log(message)
+            console.log("message ligne 507")
+            console.log(message)
         } // if TXT ou CSV
 
         /********************

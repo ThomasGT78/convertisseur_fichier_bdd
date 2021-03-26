@@ -1,0 +1,13 @@
+[
+{ "id_client": "1",  "nom": "BUGUET",  "prenom": "Pascal",  "adresse": "null",  "date_naissance": "Mon Oct 03 1955 00:00:00 GMT+0100 (Central European Summer Time)",  "cp": "75011",  "date_française": "null" },
+{ "id_client": "2",  "nom": "FERCHICHI",  "prenom": "Youssef ",  "adresse": "null",  "date_naissance": "Thu Apr 02 1998 00:00:00 GMT+0200 (Central European Summer Time)",  "cp": "75011",  "date_française": "null" },
+{ "id_client": "3",  "nom": "GAROT",  "prenom": "Thomas",  "adresse": "null",  "date_naissance": "Sun May 10 1987 00:00:00 GMT+0200 (Central European Summer Time)",  "cp": "94200",  "date_française": "null" },
+{ "id_client": "4",  "nom": "JULIEN",  "prenom": "Willy ",  "adresse": "null",  "date_naissance": "Thu Nov 07 1991 00:00:00 GMT+0100 (Central European Standard Time)",  "cp": "75012",  "date_française": "null" },
+{ "id_client": "5",  "nom": "AUBRY",  "prenom": "Paul",  "adresse": "null",  "date_naissance": "Sun Nov 24 1991 00:00:00 GMT+0100 (Central European Standard Time)",  "cp": "75012",  "date_française": "null" },
+{ "id_client": "6",  "nom": "GIBRENNE",  "prenom": "Pierre",  "adresse": "null",  "date_naissance": "Mon Oct 14 1996 00:00:00 GMT+0200 (Central European Summer Time)",  "cp": "99392",  "date_française": "null" },
+{ "id_client": "7",  "nom": "WENTA",  "prenom": "Bruno Maximilien",  "adresse": "null",  "date_naissance": "Sun Nov 11 1973 00:00:00 GMT+0100 (Central European Standard Time)",  "cp": "99392",  "date_française": "null" },
+{ "id_client": "8",  "nom": "MAIO",  "prenom": "Mickael",  "adresse": "null",  "date_naissance": "Fri Nov 07 1986 00:00:00 GMT+0100 (Central European Standard Time)",  "cp": "59000",  "date_française": "null" },
+{ "id_client": "9",  "nom": "GUENDOUZE",  "prenom": "Zaid",  "adresse": "null",  "date_naissance": "Wed Apr 26 1989 00:00:00 GMT+0200 (Central European Summer Time)",  "cp": "59000",  "date_française": "null" },
+{ "id_client": "10",  "nom": "SCHEURKOGEL",  "prenom": "Virginie",  "adresse": "null",  "date_naissance": "Sun Nov 19 1978 00:00:00 GMT+0100 (Central European Standard Time)",  "cp": "69000",  "date_française": "null" },
+{ "id_client": "12",  "nom": "SEMAKDJI",  "prenom": "Redwan",  "adresse": "null",  "date_naissance": "Fri Apr 16 1993 00:00:00 GMT+0200 (Central European Summer Time)",  "cp": "69000",  "date_française": "null" }
+]

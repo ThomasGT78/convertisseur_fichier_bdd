@@ -1,0 +1,5 @@
+nom,prenom,cp
+BUGUET,Pascal,75011
+FERCHICHI,Youssef ,75011
+JULIEN,Willy ,75012
+AUBRY,Paul,75012

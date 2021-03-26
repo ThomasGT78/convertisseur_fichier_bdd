@@ -1,28 +1,34 @@
-<!DOCTYPE html>
-<html>
+<%- include ('partials/header') %>
 
-<head>
-    <title>connexion.ejs</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-</head>
+<div class="title-bar">
+    <h1 class="title">Convertisseur BD / Fichier</h1>
+</div>
 
-<body>
     <h3>Connexion</h3>
+
+    <h4>Bienvenue sur le convertisseur BD - Fichier (.txt / .csv / .json)</h4>
+    
+    <p>Veuillez vous connecter à votre serveur pour accéder aux fonctionnalités et à vos bases de données</p>
     <br>
+    
     <form method="get" action="/home">
-        <label for="host" class="etiquette">Host (adresse IP ou nom d'Hôte</label>
-        <input type="text" name="host" value="localhost" />
-        <br>
-        <label for="user" class="etiquette">User</label>
-        <input type="text" name="user" value="root" />
-        <br>
-        <label for="password" class="etiquette">Password</label>
-        <input type="password" name="password" />
-        <br>
-        <input type="submit" value="Se Connecter" id="connect" />
+        <div class="form-group">
+            <div class="form-item grid-item1">
+                <label for="host" class="etiquette">Host :</label><br>
+                <input type="text" name="host" placeholder="adresse IP ou nom d'Hôte (ex:localhost)" value="localhost" />
+            </div>
+            <div class="form-item grid-item2">
+                <label for="user" class="etiquette">User :</label><br>
+                <input type="text" name="user" placeholder="Nom d'utilisateur (ex:root)" value="root" />
+            </div>
+            <div class="form-item grid-item3">
+                <label for="password" class="etiquette">Password :</label><br>
+                <input type="password" name="password" placeholder="Mot de passe" />
+            </div>
+            <div >
+                <input type="submit" value="Se Connecter" id="connect" class="btn btn-validate"/>
+            </div>
+        </div>
     </form>
 
-</body>
-
-</html>
+<%- include ('partials/footer') %>

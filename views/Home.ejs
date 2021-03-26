@@ -1,27 +1,27 @@
-<!DOCTYPE html>
-<html>
+<%- include ('partials/header') %>
+    <%- include ('partials/title') %>
 
-<head>
-    <title>Home.ejs</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-</head>
-
-<body>
-    <h3>Home CRUD et Convertisseur BD</h3>
-        <br>
-        <%= messageConnexion %>
-        <br>
+    <div class="container">
+        <h3><%= messageConnexion %></h3>
         <h2>Que voulez-vous faire?</h2>
-        <br>
-        <a href="/CRUD">Modifier une Base de donnée</a>
-        <br>
-        <a href="/choixBDconvert">Convertir une Table en fichier</a>
-        <br>
-        <a href="/choixBDinsert">Insérer les données d'un fichier dans une Table de BD (Insérer à partir d'un fichier)</a>
-        <br>
-        <br>
-        <a href="/">Changer de connexion</a>
-</body>
+        <p>
+            <a href="/" class="btn btn-delete">Se connecter à un autre serveur</a>
+        </p>
+        <ul class="btn-big">
+            <li class="btn-link-big">
+                <a href="/CRUD">Modifier une BDD</a>
+            </li>
+            <li class="btn-link-big">
+                <a href="/choixBDconvert">BDD => fichier</a>
+            </li>
+            <li class="btn-link-big">
+                <a href="/choixBDinsert">Fichier => BD</a>
+            </li>
+        </ul>
+    </div>
+    <p class="show-mouse-over">Modifier des tables dans une Base de Donnée</p>
+    <p class="show-mouse-over">Exporter les données d'une table en fichier « .txt », « .csv » ou « .json ».</p>
+    <p class="show-mouse-over">Importer les données d'un fichier dans une table de BDD</p>
+    
 
-</html>
+<%- include ('partials/footer') %>

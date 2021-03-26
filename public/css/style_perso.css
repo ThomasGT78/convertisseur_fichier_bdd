@@ -1,0 +1,255 @@
+/*******     TITLE     ********/
+
+.title-bar{
+    margin: 0 0 10px 0;
+    padding: 0 0 0 0;
+    background-color: rgb(159, 161, 182);
+    position: sticky;
+    top: 0px;
+}
+.title{
+    text-align: center;
+    margin: 0 0 10px 0;
+    padding: 10px 0 10px 0;
+}
+
+h2 {
+    margin: 40px 10px;
+}
+/*******     NAV BAR     ********/
+
+.nav-bar { /* ul */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 6px 0 0 1px ;
+    margin: 0 5px 5px 5px;
+    list-style-type: none;
+    /* background-color: rgb(233, 233, 233); */
+}
+
+.nav-link { /* ul li */
+    display: table;
+    margin: 0 8px 4px 0;
+    padding: 0;
+    border: solid black 1px;
+    border-radius: 2px;
+    width: max-content;
+    text-decoration : none;
+    box-shadow: -2px -2px 5px 0px black;
+    background-color: rgb(233, 233, 233);
+}
+
+.nav-link a{ /* ul li a */
+    display: table-cell;
+    vertical-align: middle;
+    text-decoration : none;
+    color: crimson;
+    padding: 4px;
+    font-weight: 600;
+}
+
+/*******    BODY   ********/
+
+.container{
+    margin: 5px;
+    padding: 5px;
+}
+
+/*******    FORMS   ********/
+
+.form-group{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: max-content;
+    /* grid: repeat(3, 1fr) / max-content; */
+    grid-template-areas:"case1 case2 case3";
+    margin: 10px 5px 10px 5px;
+}
+
+.form-item{
+    margin: 0 10px 0 0;
+    padding: 0 5px 10px 0;
+}
+
+.grid-item1{
+    grid-area: case1;
+}
+.grid-item2{
+    grid-area: case2;
+}
+.grid-item3{
+    grid-area: case3;
+}
+
+.form-item input{
+    width: 100%;
+}
+
+.form-bd{
+    display: flex;
+    flex-direction: column;
+    min-width: max-content;
+    width: 50%;
+    max-width: 400px;
+    margin-left: 25%;
+}
+
+.form-bd label{
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 5px;
+}
+
+.form-bd option{
+    text-align: center;
+    margin: 0 6px;
+    padding: 2px;
+    border-bottom: solid 1px rgb(87, 86, 86);
+}
+
+.form-table{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.form-block-table{
+    margin: 0 15px;
+    min-width: max-content;
+    width: 25%;
+}
+
+.form-table label{
+    display: block;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 5px;
+}
+.form-table input{
+    display: block;
+    width: 100%;
+}
+.form-table select{
+    display: block;
+    width: 100%;
+}
+.form-table option{
+    text-align: center;
+    margin: 0 6px;
+    padding: 2px;
+    border-bottom: solid 1px rgb(87, 86, 86);
+}
+
+.flex-col{
+    flex-direction: column;
+}
+.flex-row{
+    flex-direction: row;
+}
+.w30{
+    width: 30%;
+    min-width: 195px;
+}
+.w50{
+    width: 45%;
+}
+.w100{
+    width: 100%;
+}
+
+#btConvertir{
+    margin-left: 15%;
+}
+
+.div-btn-convertir{
+    margin: 20px 15px;
+    width: 24%;
+    min-width: 200px;
+}
+
+.btn-convertir{
+    width: 100%;
+}
+
+        /*******    HIDDEN CONTENT   ********/
+
+.show-mouse-over {
+    display: none;
+    /* visibility: hidden visible */
+}
+
+        /*******    ACTION BUTTON   ********/
+.btn-big { /* ul */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    padding: 6px 0 0 1px ;
+    margin: 25px 1px 5px 1px;
+    list-style-type: none;
+}
+
+.btn-link-big { /* ul li */
+    display: table;
+    min-width: 140px;
+    width: 20%;
+    height: 70px;
+    margin: 10px;
+    text-align: center;
+
+    border: solid black 1px;
+    border-radius: 2px;
+    box-shadow: -2px -2px 5px 0px black;
+    background-color: rgb(233, 233, 233);
+}
+
+.btn-link-big a{ /* ul li a */
+    vertical-align: middle;
+    display: table-cell;
+    padding: 0;
+    text-decoration : none;
+    color: crimson;
+    font-weight: 600;
+}
+
+/*******     BUTTONS     ********/
+
+.btn {
+    display: table;
+    border: rgb(248, 242, 231) solid 2px;
+    border-radius: 4px;
+    margin: 3px;
+    padding: 7px;
+}
+
+.btn-link {
+    vertical-align: middle;
+    display: table-cell;
+    color: white;
+}
+
+.btn-delete {
+    background-color: crimson;
+    color: white;
+}
+.btn-validate {
+    background-color: rgb(13, 165, 38);
+    color: white;
+}
+
+.btn-update {
+    background-color: rgb(216, 148, 47);
+    color: white;
+}
+
+/*******     COLORS     ********/
+
+.strong-red {
+    color: red;
+    font-style: oblique;
+    font-size: larger;
+}

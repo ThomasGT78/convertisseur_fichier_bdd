@@ -1,34 +1,19 @@
-<!DOCTYPE html>
-<html>
+<%- include ('partials/header') %>
+    <%- include ('partials/title') %>
 
-<head>
-    <title>choixBDconvert.ejs</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-</head>
-
-<body>
-    <h3>Choix de la BD du Convertisseur</h3>
-
-    <form method="post" action="/choixTableConvert">
+    <h2>Choisissez la base de données où se trouve vous données</h2>
+    
+    <form method="post" action="/choixTableConvert" class="form-bd">
         <label for="bd_name">Nom de la Base de Données</label>
-        <select id="bd_name" name="bd_name" size=3>
+        <select id="bd_name" name="bd_name" size=5 required>
+            <!-- <option>  --   Choisissez votre BDD   --  </option> -->
             <%- optionsBD %>
         </select>
-        <input type="submit" value="Valider" id="btValider" />
+        <input type="submit" value="Valider" id="btValider" class="btn btn-validate"/>
     </form>
 
-    <br>
-    <a href="/CRUD">Modifier une Base de donnée</a>
-    <br>
-    <a href="/choixFichierConvert">Insérer données à partir d'un fichier</a>
-    <br>
-    <br>
-    <a href="/home2">Back to Home</a>
-    <br>
-    <a href="/">Changer de connexion</a>
+    
 
-    <script src="../jquery/jquery.js"></script>
-</body>
+    <!-- // <script src="../jquery/jquery.js"></script> -->
 
-</html>
+<%- include ('partials/footer') %>
