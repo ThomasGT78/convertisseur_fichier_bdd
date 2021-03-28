@@ -1,21 +1,45 @@
-var formatToConvert = document.getElementById("formatToConvert")
-var separateur = document.getElementById("separateur")
-formatToConvert.onclick = function () {
-    if (formatToConvert == "txt" || formatToConvert == "csv") {
-        separateur.disabled = true;
-    } else {
-        separateur.disabled = false;
+var formatToConvert = document.getElementById("formatToConvert");
+var separateurExport = document.getElementById("separateurExport");
+
+var formatToImport = document.getElementById("formatToImport");
+var separateurImport = document.getElementById("separateurImport");
+
+function initExport () {
+
+    formatToConvert.onclick = function () {
+        if (formatToConvert.value == "txt" || formatToConvert.value == "csv") {
+            separateurExport.disabled = false;
+        } else {
+            separateurExport.disabled = true;
+        }
+    } // disable function export
+}
+
+
+// console.log(formatToImport);
+
+function initImport(){
+    formatToImport.onclick = function () {
+        if (formatToImport.value == "txt" || formatToImport.value == "csv") {
+            separateurImport.disabled = false;
+            // console.log("abled")
+        } else {
+            separateurImport.disabled = true;
+            // console.log("disabled")
+        }
+    } // disable function import
+}
+
+var title = document.getElementsByTagName("title");
+var titleText = title[0].innerText
+
+function init (titleText) {
+    console.log(titleText);
+    if (titleText == "choixTableConvert.ejs"){
+        initExport();
+    } else if (titleText == "choixTableInsert.ejs") {
+        initImport();
     }
-} // disable function
+}
+document.onload = init(titleText);
 
-/*
-<select id="formatToConvert" name="formatToConvert" required onclick = '<%- disable %>'>
-            <option value='0'>--Choisissez votre format--</option>
-            <option value='txt'>txt</option>
-            <option value='csv'>csv</option>
-            <option value='json'>json</option>
-
-</select>
-
-<script src="../testDisable.js" type="text/javascript"></script>
-*/

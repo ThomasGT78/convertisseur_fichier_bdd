@@ -41,7 +41,7 @@ function convertToJson () {
         }
         console.log("Données écrites !");
     }); // writeFile
-    message = `Table ${tableChoisie} convertis en fichier .${formatToConvert}`
+    message = `Table « ${tableChoisie} » convertis en fichier <strong>« table_${tableChoisie}.${formatToConvert} »</strong>`;
 
 
 } // function convertToJson

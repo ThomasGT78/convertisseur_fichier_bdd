@@ -19,6 +19,7 @@ var convertToTxtCsv = require('./public/js/moduleConvert.js');
 
 var connexion;
 var connectHost;
+var connectPort; // port du server mySQL
 var connectUser;
 var connectPassword;
 
@@ -26,30 +27,33 @@ var BDchoisie;
 
 
 /*************************************
-**********   Vers la page connexion.ejs   ***********
+**********   Vers la page homeConnect.ejs   ***********
  *************************************/
 
 // http://localhost:8081/
 app.get('/', function (req, res) {
+    var title = "homeConnect";
+
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.render('connexion.ejs');
+    res.render('homeConnect.ejs', { title: title });
 });
 
 /*************************************
 **********   Vers la page Home.ejs   ***********
  *************************************/
 
-app.get('/home', function (req, res) {
+app.get('/menu', function (req, res) {
+    var title = "menu";
+
+    // récupération des données du formulaire GET
     connectHost = req.query.host
+    connectPort = req.query.port
     connectUser = req.query.user
     connectPassword = req.query.password
-    console.log(connectHost)
-    console.log(connectUser)
-    console.log('password: ' + connectPassword)
 
     connexion = mysql.createConnection({
         host: connectHost,
-        port: '3306',
+        port: connectPort,
         user: connectUser,
         password: connectPassword,
         database: ''
@@ -59,52 +63,53 @@ app.get('/home', function (req, res) {
     connexion.connect();
 
     var messageConnexion = `vous êtes connecté sous user ${connectUser} et avec l'hôte ${connectHost}`
-    console.log('ligne 59 \n' + messageConnexion)
+    
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.render('Home.ejs', { messageConnexion: messageConnexion });
+    res.render('menu.ejs', { messageConnexion: messageConnexion, title: title });
 });
 
 /******************************
-**********   Vers la page home2.ejs   ***********
+**********   Vers la page menu2.ejs   ***********
  ******************************/
-app.get('/home2', function (req, res) {
+app.get('/menu2', function (req, res) {
+    var title = "menu2";
 
     // On ne se reconnect pas ici, on revient juste sur la page d'accueil sans modifier la connexion
 
     var messageConnexion = `vous êtes connecté sous user ${connectUser} et avec l'hôte ${connectHost}`
-    console.log('ligne 59 \n' + messageConnexion)
+    
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.render('Home.ejs', { messageConnexion: messageConnexion });
-});
+    res.render('menu.ejs', { messageConnexion: messageConnexion, title: title });
+
+}); // get /menu2
+
 /*************************************
 **********   Affichage Home et liste des BD  ***********
  ************************************/
 
-app.get('/choixBDconvert', function (req, res) {
-    console.log('CONSOLE LIGNE 41: Vers la page Choix de la BD');
+app.get('/bdExport', function (req, res) {
+    var title = "bdExport";
+
     optionsBD = '';         // <option> à insérer
     connexion.query(`SELECT DISTINCT TABLE_SCHEMA FROM  information_schema.tables WHERE TABLE_TYPE = 'BASE TABLE';`, function (err, rows, fields) {
         // Erreur
-        if (err) {
+        if (err) {  
             console.log('Erreur -1 : ' + err.code);
         }
-        else { // Pas d'erreur
+        // Pas d'erreur
+        else { 
             for (i = 0; i < rows.length; i++) { // Boucle pour afficher la liste des BD dans des <option>
                 //console.log(rows[i])
                 //console.log(rows[i].TABLE_SCHEMA)
                 optionsBD += `<option value='${rows[i].TABLE_SCHEMA}'>${rows[i].TABLE_SCHEMA}</option>`
             }
-            //console.log(rows.TABLE_SCHEMA)
-            //console.log(rows)
-            //console.log(fields)
         } // else
 
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        res.render('choixBDconvert.ejs', { optionsBD: optionsBD });
+        res.render('bddExport.ejs', { optionsBD: optionsBD, title: title });
     }); /// query
 
-
-}); // get
+}); // get /bdExport
 
 //-------------------------------------------------------------------------------------------
 
@@ -112,12 +117,12 @@ app.get('/choixBDconvert', function (req, res) {
 **********   Affichage choixTableConvert et les listes   **********
  *************************************************/
 
-app.post('/choixTableConvert', function (req, res) {
-    console.log('CONSOLE LIGNE 71: Vers la page Choix de la Table');
+app.post('/tableExport', function (req, res) {
+    var title = "tableExport";
+
     optionsTables = '';
     BDchoisie = req.body.bd_name;
     optionsBD = '';         // <option> à insérer
-
 
     /*******************
      *   Liste des BD  *
@@ -160,27 +165,32 @@ app.post('/choixTableConvert', function (req, res) {
                     }) // query for
                 } // for
                 res.setHeader('Content-Type', 'text/html; charset=utf-8');
-                res.render('choixTableConvert.ejs', { optionsBD: optionsBD, BDchoisie: BDchoisie, optionsTables: optionsTables });
+                res.render('tableExport.ejs', { optionsBD: optionsBD, BDchoisie: BDchoisie, optionsTables: optionsTables, title: title });
             } // else
         }); /// query 2 (Tables)
     }); /// query 1 (BD)    
 
-}); //post
+}); // post /tableExport
 
 /************************************************
 **********   CONVERSION DE LA TABLE + PAGE VALIDATION   **********
  ************************************************/
 
-app.post('/validationConvert', function (req, res) {
+app.post('/validationExport', function (req, res) {
+    var title = "validationExport";
 
     convertToTxtCsv(req, res, connexion, BDchoisie)
 
-}); //post conversion
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.render('validation.ejs', { message: message, title: title });
+}); //post /validationExport
 
 //-------------------------------------------------------------------------------------------
 ///////////////////////////////     insertFichierIntoBD     /////////////////////////////////
 
-app.get('/choixBDinsert', function (req, res) {
+app.get('/bddImport', function (req, res) {
+    var title = "bddImport";
+
     console.log('CONSOLE LIGNE 337: Vers la page Choix de la BD');
     optionsBD = '';         // <option> à insérer
     connexion.query(`SELECT DISTINCT TABLE_SCHEMA FROM  information_schema.tables WHERE TABLE_TYPE = 'BASE TABLE';`, function (err, rows, fields) {
@@ -200,10 +210,10 @@ app.get('/choixBDinsert', function (req, res) {
         } // else
 
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        res.render('choixBDinsert.ejs', { optionsBD: optionsBD });
+        res.render('bddImport.ejs', { optionsBD: optionsBD, title: title });
 
     }); /// query
-}); // get
+}); // get /bddImport
 
 //-------------------------------------------------------------------------------------------
 
@@ -211,7 +221,9 @@ app.get('/choixBDinsert', function (req, res) {
 **********   Affichage choixTableConvert et les listes    **********
          *************************************************/
 
-app.post('/choixTableInsert', function (req, res) {
+app.post('/tableImport', function (req, res) {
+    var title = "tableImport";
+
     console.log('CONSOLE LIGNE 71: Vers la page Choix de la Table');
     optionsTables = '';
     BDchoisie = req.body.bd_name;
@@ -258,16 +270,17 @@ app.post('/choixTableInsert', function (req, res) {
                     }) // query for
                 } // for
                 res.setHeader('Content-Type', 'text/html; charset=utf-8');
-                res.render('choixTableInsert.ejs', { optionsBD: optionsBD, BDchoisie: BDchoisie, optionsTables: optionsTables });
+                res.render('tableImport.ejs', { optionsBD: optionsBD, BDchoisie: BDchoisie, optionsTables: optionsTables, title: title });
             } // else
         }); /// query 2 (Tables)
     }); /// query 1 (BD)
 
-}); //post
+}); // post /tableImport
 
 //-------------------------------------------------------------------------------------------
 
-app.post('/validationInsert', function (req, res) {
+app.post('/validationImport', function (req, res) {
+    var title = "validationImport";
     // var nomTable = 'villes_bis';
     // var nomFichier = 'table_villes.csv';
     // var separateur = ',';
@@ -346,7 +359,7 @@ app.post('/validationInsert', function (req, res) {
                             return message
                         } // if Pas d'erreur
                         else {  // Pas d'erreur
-                            message = `Les données ont été inséré dans la Base de Données: ${BDchoisie}, dans la table: ${nomTable}`
+                            message = `Les données ont été inséré dans la Base de Données: <strong>${BDchoisie}</strong>, dans la table: <strong>${nomTable}</strong>`
                             // console.log("message ligne 350:")
                             // console.log(message)
                             return message
@@ -410,8 +423,8 @@ app.post('/validationInsert', function (req, res) {
     console.log("message ligne 410")
     console.log(message)
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.render('validationInsert.ejs', { message: message });
-}); //post validationInsert
+    res.render('validation.ejs', { message: message, title: title });
+}); //post /validationImport
 //-------------------------------------------------------------------------------------------
 
 // ... Tout le code de gestion des routes (app.get) se trouve au-dessus
@@ -420,6 +433,7 @@ app.use(function (req, res, next) {
     res.status(404).send('Page introuvable !');
 });
 
+// Choix du port du serveur
 app.listen(8081);
 console.log("Le serveur tourne sur http://localhost:8081");
 

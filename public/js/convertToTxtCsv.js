@@ -64,6 +64,6 @@ module.exports = function (tableChoisie, formatToConvert, separateur, rows, fiel
         }); // appendFile
     }); // writeFile
 
-    message = `Table ${tableChoisie} convertis en fichier table_${tableChoisie}.${formatToConvert}`
+    message = `Table ${tableChoisie} convertis en fichier <strong>« table_${tableChoisie}.${formatToConvert} »</strong>`
     return message
 } // function convertToTxtCsv

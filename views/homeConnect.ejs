@@ -11,19 +11,23 @@
     <p>Veuillez vous connecter à votre serveur pour accéder aux fonctionnalités et à vos bases de données</p>
     <br>
     
-    <form method="get" action="/home">
+    <form method="get" action="/menu">
         <div class="form-group">
             <div class="form-item grid-item1">
                 <label for="host" class="etiquette">Host :</label><br>
-                <input type="text" name="host" placeholder="adresse IP ou nom d'Hôte (ex:localhost)" value="localhost" />
+                <input type="text" name="host" id="host" placeholder="adresse IP ou nom d'Hôte (ex:localhost)" value="localhost" />
             </div>
             <div class="form-item grid-item2">
-                <label for="user" class="etiquette">User :</label><br>
-                <input type="text" name="user" placeholder="Nom d'utilisateur (ex:root)" value="root" />
+                <label for="port" class="etiquette">Port :</label><br>
+                <input type="text" name="port" id="port" placeholder="port du serveur (ex:3306)" value="3306" />
             </div>
             <div class="form-item grid-item3">
+                <label for="user" class="etiquette">User :</label><br>
+                <input type="text" name="user" id="user" placeholder="Nom d'utilisateur (ex:root)" value="root" />
+            </div>
+            <div class="form-item grid-item4">
                 <label for="password" class="etiquette">Password :</label><br>
-                <input type="password" name="password" placeholder="Mot de passe" />
+                <input type="password" name="password" id="password" placeholder="Mot de passe" />
             </div>
             <div >
                 <input type="submit" value="Se Connecter" id="connect" class="btn btn-validate"/>

@@ -2,20 +2,23 @@
     <%- include ('partials/title') %>
 
     <div class="container">
-        <h3><%= messageConnexion %></h3>
+        <h3><%- messageConnexion %></h3>
+
         <h2>Que voulez-vous faire?</h2>
+
         <p>
             <a href="/" class="btn btn-delete">Se connecter à un autre serveur</a>
         </p>
+        
         <ul class="btn-big">
             <li class="btn-link-big">
                 <a href="/CRUD">Modifier une BDD</a>
             </li>
             <li class="btn-link-big">
-                <a href="/choixBDconvert">BDD => fichier</a>
+                <a href="/bddExport">BDD => fichier</a>
             </li>
             <li class="btn-link-big">
-                <a href="/choixBDinsert">Fichier => BD</a>
+                <a href="/bddImport">Fichier => BD</a>
             </li>
         </ul>
     </div>
@@ -23,5 +26,4 @@
     <p class="show-mouse-over">Exporter les données d'une table en fichier « .txt », « .csv » ou « .json ».</p>
     <p class="show-mouse-over">Importer les données d'un fichier dans une table de BDD</p>
     
-
 <%- include ('partials/footer') %>

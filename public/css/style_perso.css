@@ -60,16 +60,19 @@ h2 {
 
 .form-group{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: max-content;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: max-content max-content;
     /* grid: repeat(3, 1fr) / max-content; */
-    grid-template-areas:"case1 case2 case3";
+    grid-template-areas:
+        "case1 case2"
+        "case3 case4";
     margin: 10px 5px 10px 5px;
 }
 
 .form-item{
     margin: 0 10px 0 0;
     padding: 0 5px 10px 0;
+    min-width: max-content;
 }
 
 .grid-item1{
@@ -81,9 +84,12 @@ h2 {
 .grid-item3{
     grid-area: case3;
 }
+.grid-item4{
+    grid-area: case4;
+}
 
 .form-item input{
-    width: 100%;
+    width: 90%;
 }
 
 .form-bd{
@@ -252,4 +258,8 @@ h2 {
     color: red;
     font-style: oblique;
     font-size: larger;
+}
+
+.blue {
+    color: rgb(63, 52, 158);
 }
