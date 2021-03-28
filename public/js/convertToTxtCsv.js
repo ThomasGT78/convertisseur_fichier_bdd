@@ -1,6 +1,6 @@
 // convertToTxtCsv.js
 
-module.exports = function (tableChoisie, formatToConvert, separateur, rows, fields, message) {
+module.exports = function (tableChoisie, formatToConvert, separateurExport, rows, fields, message) {
 
     const fs = require('fs');
 
@@ -15,7 +15,7 @@ module.exports = function (tableChoisie, formatToConvert, separateur, rows, fiel
             if (firstLine == "") {
                 firstLine = `${fields[i].name}`
             } else {
-                firstLine += `${separateur}${fields[i].name}`
+                firstLine += `${separateurExport}${fields[i].name}`
             }
         } // for
         return firstLine
@@ -37,7 +37,7 @@ module.exports = function (tableChoisie, formatToConvert, separateur, rows, fiel
                 }
                 else {                                  // sinon met le ; avant le contenu 
                     var colonne = fields[k].name    // stock le nom de colonne où on veut récup l'info
-                    dataTab += `${separateur}${rows[i][colonne]}`   // enregistre la valeur du reste des colonnes d'une ligne
+                    dataTab += `${separateurExport}${rows[i][colonne]}`   // enregistre la valeur du reste des colonnes d'une ligne
                 }
             } // for Fields
         } // for Rows

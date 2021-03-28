@@ -1,14 +1,19 @@
 /// Bug à fixer
-
+OK-mettre un selected sur l'option de la BD choisie 
+OK-regrouper page de confirmation et home
+OK-fixer bug redirection vers home après la validation
+OK-modifier chemin d'import et export des tables
+- Ajouter recherche de fichier/dossier dans windows pour importer ou exporter
 -convertion avec 1 seule ligne de donnée dans la table (pb boucle)
 -remplace les NULL par "" et inversement
+-regler bug des message de validation (pb d'asynchronisme, )
 -factoriser
--montrer infos menu on-mouse-over
--mettre un selected sur l'option de la BD choisie sur la page de choix de la table
 -enlever les commentaires et console.log inutiles
--changer noms des fichier et des routes
--enlever les ejs des title
--mettre le titre principal en lien vers Home2
+-montrer infos menu on-mouse-over
+-Créer un bouton de déconnexion
+-regrouper le choix de la BD import/export sur 1 seule page
+-séparer les champs nom du fichier et extension sur la page de choix de la table
+-modifer signalisation du code pour rendre plus clair
 
 /// Algo
 ouvre la page avec liste des bd

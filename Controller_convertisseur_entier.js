@@ -24,9 +24,9 @@ var connectPassword;
 var BDchoisie;
 
 
-/*************************************
-**********   Vers la page homeConnect.ejs   ***********
- *************************************/
+/*****************************************************************************************************
+********                                /   -   homeConnect.ejs                            ***********
+*****************************************************************************************************/
 
 // http://localhost:8081/
 app.get('/', function (req, res) {
@@ -36,9 +36,12 @@ app.get('/', function (req, res) {
     res.render('homeConnect.ejs', {title: title});
 });
 
-/*************************************
-**********   Vers la page menu.ejs   ***********
- *************************************/
+
+/*****************************************************************************************************
+********                                /menu   -   menu.ejs                                  ********
+********                                                                                      ********
+********                    Direction vers le menu après la requête de conexion               ********
+*****************************************************************************************************/
 
 app.get('/menu', function (req, res) {
     var title = "menu";
@@ -63,28 +66,46 @@ app.get('/menu', function (req, res) {
     // Connexion a la BD
     connexion.connect();
 
-    var messageConnexion = `Vous êtes connecté avec le user <span class="blue">« ${connectUser} »</span>  et sur le port <span class="blue">« ${connectPort} »</span> de l'hôte <span class="blue">« ${connectHost} »</span> `
+    var messageConnexion = `Vous êtes connecté avec le user <span class="blue">« ${connectUser} »</span>  et sur le port <span class="blue">« ${connectPort} »</span> de l'hôte <span class="blue">« ${connectHost} »</span> `;
+    var messageValidation = "";
+
     console.log('ligne 59 \n' + messageConnexion)
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.render('menu.ejs', { messageConnexion: messageConnexion, title: title });
+    res.render('menu.ejs', { messageConnexion: messageConnexion, title: title, messageValidation: messageValidation });
 });
 
-        /********************************
-*********   Vers la page menu2.ejs      ***********
-        ********************************/
+
+/*****************************************************************************************************
+********                                /menu2   -   menu.ejs                                 ********
+********                                                                                      ********
+********    Redirection vers le menu en gardant les identifiant donc sans faire de requête    ********
+*****************************************************************************************************/
+
 app.get('/menu2', function (req, res) {
     var title = "menu2";
 
     // On ne se reconnect pas ici, on revient juste sur la page d'accueil sans modifier la connexion
 
-    var messageConnexion = `Vous êtes connecté sous user ${connectUser} et avec l'hôte ${connectHost}`
+    var messageConnexion = `Vous êtes connecté avec le user <span class="blue">« ${connectUser} »</span>  et sur le port <span class="blue">« ${connectPort} »</span> de l'hôte <span class="blue">« ${connectHost} »</span> `;
+    var messageValidation = "";
     
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.render('menu.ejs', { messageConnexion: messageConnexion, title: title });
+    res.render('menu.ejs', { messageConnexion: messageConnexion, title: title, messageValidation: messageValidation });
 });
-        /****************************************
-*********    Affichage Home et liste des BD     ***********
-         ***************************************/
+
+
+
+
+
+/*----------------------------------------------------------------------------------------------------
+----------------                            EXPORTATION                               ----------------
+----------------------------------------------------------------------------------------------------*/
+
+/*****************************************************************************************************
+********                        /bddExport   -   bddExport.ejs                                ********
+********                                                                                      ********
+********                    Affichage de la liste des BD disponibles                          ********
+*****************************************************************************************************/
 
 app.get('/bddExport', function (req, res) {
     var title = "bddExport";
@@ -114,11 +135,12 @@ app.get('/bddExport', function (req, res) {
 
 }); // get
 
-//-------------------------------------------------------------------------------------------
 
-        /*************************************************
-**********   Affichage choixTableConvert et les listes   **********
-        *************************************************/
+/*****************************************************************************************************
+********                        /tableExport   -   tableExport.ejs                            ********
+********                                                                                      ********
+********        Affichage des tables d'où exporter les données + modif de la BD possible      ********
+*****************************************************************************************************/
 
 app.post('/tableExport', function (req, res) {
     var title = "tableExport";
@@ -140,7 +162,12 @@ app.post('/tableExport', function (req, res) {
         }
         else { // Pas d'erreur
             for (i = 0; i < rows.length; i++) { // Boucle pour afficher la liste des BD dans des <option>
-                optionsBD += `<option value='${rows[i].TABLE_SCHEMA}'>${rows[i].TABLE_SCHEMA}</option>`
+                var rowBD = rows[i].TABLE_SCHEMA;
+                if (BDchoisie == rowBD) {
+                    optionsBD += `<option value='${rows[i].TABLE_SCHEMA}' selected>${rows[i].TABLE_SCHEMA}</option>`;
+                } else {
+                    optionsBD += `<option value='${rows[i].TABLE_SCHEMA}'>${rows[i].TABLE_SCHEMA}</option>`;
+                }
             } // for
         } // else
 
@@ -178,16 +205,19 @@ app.post('/tableExport', function (req, res) {
 
 }); // post /tableExport
 
-        /************************************************
-**********   CONVERSION DE LA TABLE + PAGE VALIDATION   **********
-        ************************************************/
+
+/*****************************************************************************************************
+********                        /validationExport   -   menu.ejs                              ********
+********                                                                                      ********
+********                Convertion de la table en fichier txt, csv, ou json                   ********
+*****************************************************************************************************/
 
 app.post('/validationExport', function (req, res) {
     var title = "validationExport";
 
     var tableChoisie = req.body.table_name;
     var formatToConvert = req.body.formatToConvert;
-    var separateur = req.body.separateur;
+    var separateurExport = req.body.separateurExport;
     //console.log('CONSOLE LIGNE 164');
     //console.log(BDchoisie);
     //console.log(tableChoisie);
@@ -219,7 +249,7 @@ app.post('/validationExport', function (req, res) {
                         if (firstLine == "") {
                             firstLine = `${fields[i].name}`
                         } else {
-                            firstLine += `${separateur}${fields[i].name}`
+                            firstLine += `${separateurExport}${fields[i].name}`
                         }
                     } // for
                     return firstLine
@@ -241,7 +271,7 @@ app.post('/validationExport', function (req, res) {
                             }
                             else {                                  // sinon met le ; avant le contenu 
                                 var colonne = fields[k].name    // stock le nom de colonne où on veut récup l'info
-                                dataTab += `${separateur}${rows[i][colonne]}`   // enregistre la valeur du reste des colonnes d'une ligne
+                                dataTab += `${separateurExport}${rows[i][colonne]}`   // enregistre la valeur du reste des colonnes d'une ligne
                             }
                         } // for Fields
                     } // for Rows
@@ -315,24 +345,35 @@ app.post('/validationExport', function (req, res) {
                 }); // writeFile
                 // message = `Table ${tableChoisie} convertis en fichier <strong>« table_${tableChoisie}.${formatToConvert} »</strong>`;
                 message = "Table « " + tableChoisie + " » convertis en fichier <strong>« table_" + tableChoisie + "."+ formatToConvert + " »</strong>";
-
             } // else if Json
 
             else { // format non sélectionné
                 message = "veuillez sélectionner un format dans lequel convertir"
-
             }
 
         } // else pas d'erreur
 
+        var messageConnexion = `Vous êtes connecté avec le user <span class="blue">« ${connectUser} »</span>  et sur le port <span class="blue">« ${connectPort} »</span> de l'hôte <span class="blue">« ${connectHost} »</span>`;
+
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        res.render('validation.ejs', { message: message, title: title });
+        res.render('menu.ejs', { messageValidation: message, title: title, messageConnexion: messageConnexion });
     }); /// query Sélection de la Table à modifier
 
 }); //post /validationExport
 
-//-------------------------------------------------------------------------------------------
-///////////////////////////////     insertFichierIntoBD     /////////////////////////////////
+
+
+
+
+/*----------------------------------------------------------------------------------------------------
+----------------                            IMPORTATION                               ----------------
+----------------------------------------------------------------------------------------------------*/
+
+/*****************************************************************************************************
+********                        /bddImport   -   bddImport.ejs                                ********
+********                                                                                      ********
+********                    Affichage de la liste des BD disponibles                          ********
+*****************************************************************************************************/
 
 app.get('/bddImport', function (req, res) {
     var title = "bddImport";
@@ -361,11 +402,12 @@ app.get('/bddImport', function (req, res) {
     }); /// query
 }); // get /bddImport
 
-//-------------------------------------------------------------------------------------------
 
-        /*************************************************
-**********   Affichage choixTableConvert et les listes   **********
-        *************************************************/
+/*****************************************************************************************************
+********                        /tableImport   -   tableImport.ejs                            ********
+********                                                                                      ********
+********        Affichage des tables où importer les données + modif de la BD possible        ********
+*****************************************************************************************************/
 
 app.post('/tableImport', function (req, res) {
     var title = "tableImport";
@@ -375,9 +417,9 @@ app.post('/tableImport', function (req, res) {
     BDchoisie = req.body.bd_name;
     optionsBD = '';         // <option> à insérer
 
-        /*******************
-         *   Liste des BD  *
-         ******************/
+        /*****************************
+         *   Affichage Liste des BD  *
+         ****************************/
 
     connexion.query(`SELECT DISTINCT TABLE_SCHEMA FROM  information_schema.tables WHERE TABLE_TYPE = 'BASE TABLE';`, function (err, rows, fields) {
         // Erreur
@@ -386,7 +428,13 @@ app.post('/tableImport', function (req, res) {
         }
         else { // Pas d'erreur
             for (i = 0; i < rows.length; i++) { // Boucle pour afficher la liste des BD dans des <option>
-                optionsBD += `<option value='${rows[i].TABLE_SCHEMA}'>${rows[i].TABLE_SCHEMA}</option>`
+                var rowBD = rows[i].TABLE_SCHEMA;
+                if (BDchoisie == rowBD){
+                    optionsBD += `<option value='${rows[i].TABLE_SCHEMA}' selected>${rows[i].TABLE_SCHEMA}</option>`;
+                } else {
+                    optionsBD += `<option value='${rows[i].TABLE_SCHEMA}'>${rows[i].TABLE_SCHEMA}</option>`;
+                }
+                
             } // for
         } // else
 
@@ -405,6 +453,7 @@ app.post('/tableImport', function (req, res) {
 
                 for (i = 0; i < rows.length; i++) {
                     nomTable = rows[i].TABLE_NAME;
+                    // si c'est une "table", couleur = rouge / si c'est une "view", couleur = noir
                     if (rows[i].TABLE_TYPE == 'BASE TABLE') {
                         optionsTables += `<option value='${nomTable}' style= "color: red;">${nomTable} (Table)</option>`
                     } else if (rows[i].TABLE_TYPE == 'VIEW') {
@@ -423,14 +472,15 @@ app.post('/tableImport', function (req, res) {
 
 }); //post /tableImport
 
-//-------------------------------------------------------------------------------------------
+
+/*****************************************************************************************************
+********                        /validationImport   -   menu.ejs                              ********
+********                                                                                      ********
+********                Importation des données d'un fichier vers une table de BD             ********
+*****************************************************************************************************/
 
 app.post('/validationImport', function (req, res) {
     var title = "validationImport.ejs";
-    // var nomTable = 'villes_bis';
-    // var nomFichier = 'table_villes.csv';
-    // var separateur = ',';
-
 
     var nomColonne = "";        // donne les nom de colonne dans le sql
     var numberValues = "";      // ajoute les ?,?,? dans les values SQL
@@ -438,18 +488,21 @@ app.post('/validationImport', function (req, res) {
 
     var nomTable = req.body.table_name;
     var nomFichier = req.body.nomFichier;
-    var separateur = req.body.separateur;
-    console.log("nomFichier:")
-    console.log(nomFichier)
+    var separateurImport = req.body.separateurImport;
+    var cheminFichier = `table/${nomFichier}`
+    
 
-    if (fs.existsSync(nomFichier)) {                    // tester l'existence d'un fichier
+    if (fs.existsSync(cheminFichier)) {                    // tester l'existence d'un fichier
        
         /****************************
         *    FICHIER TXT ou CSV     *
         ****************************/
 
         if (nomFichier.endsWith('txt') || nomFichier.endsWith('csv')) {      // code conversion TXT et CSV
-            const data = fs.readFileSync(nomFichier).toString();   // lire le fichier, renvoi un objet, on le transforme en 'string'
+            
+
+            const data = fs.readFileSync(cheminFichier).toString();   // lire le fichier, renvoi un objet, on le transforme en 'string'
+            
         // console.log("data, ligne 39 :\n" + data);
         // console.log("typeOf data, ligne 40 :\n" + typeof data);     // renvoi un Objet
 
@@ -460,14 +513,18 @@ app.post('/validationImport', function (req, res) {
             for (let i = 0; i < tabRow.length; i++) {   // boucle dans le tableau de lignes
 
                 if (i == 0) {  // choisi les nom de colonne où ajouter les valeurs
-                    tabData = tabRow[i].trim().split(separateur)   // sépare sur le point-virgule
+                    tabData = tabRow[i].trim().split(separateurImport)   // sépare sur le point-virgule
                     // console.log(`tabData, ligne 455:`)
                     // console.log(tabData)
                     for (let k = 0; k < tabData.length; k++) {  // Boucle dans chaque ligne
                         if (k == 0) {
-                            numberValues += "?"               // ajoute les ?,?,? dans les values SQL
+                            numberValues += "?";               // ajoute les ?,?,? dans les values SQL
+                            console.log("k");
+                            console.log(k);
                         } else {
-                            numberValues += ", ?"
+                            numberValues += ", ?";
+                            console.log("k");
+                            console.log(k);
                         } // if, else ?,?,?
 
                         if (k == 0) {
@@ -479,25 +536,29 @@ app.post('/validationImport', function (req, res) {
                 } // if nom de colonne
 
                 else {  // enregistre les datas des lignes à insérer
-                    var tabData = tabRow[i].trim().split(separateur)   // sépare sur le point-virgule
+                    var tabData = tabRow[i].trim().split(separateurImport)   // sépare sur le point-virgule
                     // console.log(`tabData, ligne 74:`)
                     // console.log(tabData)
 
                             /************************
                             *   REQUÊTE TO MYSQL    *
                             ************************/
-
+                    console.log("ligne 500:numberValues");
+                    console.log(numberValues);
                     // insert les données des lignes 1 par 1 à chaque boucle
                     sql = `INSERT INTO ${BDchoisie}.${nomTable} (${nomColonne}) VALUES (${numberValues})`;
                     connexion.query(sql, tabData, function (err, rows, fields) {
                         if (err) { // Erreur !!!
                             console.log('\nErreur d\'exécution de la requête !' + err);
-                            message = `Erreur: Les données n'ont pas été inséré dans la Base de Données`
+                            message = `<span class="red">Erreur: Les données n'ont pas été inséré dans la Base de Données</span>`;
+                            return message;
+
                         } // if Pas d'erreur
                         else {  // Pas d'erreur
-                            message = `Les données ont été inséré dans la Base de Données: <strong>${BDchoisie}</strong>, dans la table: <strong>${nomTable}</strong>`
+                            message = `<span class="green">Les données ont été inséré dans la Base de Données: « ${BDchoisie} », dans la table: « ${nomTable} »</span>`
                             console.log("message ligne 499")
                             console.log(message)
+                            return message;
                         }
                     }); // query
 
@@ -515,6 +576,9 @@ app.post('/validationImport', function (req, res) {
 
             console.log("message ligne 507")
             console.log(message)
+            
+    // res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    // res.render('validation.ejs', { message: message, title: title });
         } // if TXT ou CSV
 
         /********************
@@ -523,7 +587,7 @@ app.post('/validationImport', function (req, res) {
 
         else if (nomFichier.endsWith('json')) {        // code conversion JSON
             
-            const data = JSON.parse(fs.readFileSync(nomFichier));   // lire le fichier, renvoi un objet, on le transforme en 'string'
+            const data = JSON.parse(fs.readFileSync(cheminFichier));   // lire le fichier, renvoi un objet, on le transforme en 'string'
 
             for (let i = 0; i < data.length; i++) {   // boucle dans le tableau d'Objets
                 // console.log("data[i] for, ligne 54 :");
@@ -560,22 +624,32 @@ app.post('/validationImport', function (req, res) {
     } else { // le fichier n'existe pas ou le nom est incorrect
         message = `le fichier « ${nomFichier} » n'existe pas, ou le nom est incorrect`
         console.log(message)
-    } // fs.existsSync(nomFichier)
+    } // fs.existsSync(cheminFichier)
+
+    var messageConnexion = `Vous êtes connecté avec le user <span class="blue">« ${connectUser} »</span>  et sur le port <span class="blue">« ${connectPort} »</span> de l'hôte <span class="blue">« ${connectHost} »</span> `;
 
     console.log("message ligne 524")
     console.log(message)
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.render('validation.ejs', { message: message, title: title });
+    res.render('menu.ejs', { messageValidation: message, title: title, messageConnexion: messageConnexion });
 }); //post /validationImport
-//-------------------------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------------------------------
 // ... Tout le code de gestion des routes (app.get) se trouve au-dessus
+
+
+/*****************************************************************************************************
+********                        Page d'erreur si problème de connexion                        ********
+*****************************************************************************************************/
 app.use(function (req, res, next) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.status(404).send('Page introuvable !');
 });
 
-// Choix du port du serveur
+/*****************************************************************************************************
+********                            Connexionau port du serveur                               ********
+*****************************************************************************************************/
+
 app.listen(8081);
 console.log("Le serveur tourne sur http://localhost:8081");
 

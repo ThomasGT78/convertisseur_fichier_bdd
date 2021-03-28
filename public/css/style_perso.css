@@ -3,21 +3,32 @@
 .title-bar{
     margin: 0 0 10px 0;
     padding: 0 0 0 0;
-    background-color: rgb(159, 161, 182);
+    background-color: rgb(27, 27, 27);
+    border-radius: 5px;
     position: sticky;
     top: 0px;
+    min-width: max-content;
 }
 .title{
     text-align: center;
     margin: 0 0 10px 0;
     padding: 10px 0 10px 0;
+    color: white;
 }
 
 h2 {
     margin: 40px 10px;
 }
-/*******     NAV BAR     ********/
 
+.msgValidation{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+/*******     NAV BAR     ********/
+.nav-flex-between{
+    display: flex;
+    justify-content: space-between;
+}
 .nav-bar { /* ul */
     display: flex;
     flex-direction: row;
@@ -25,18 +36,23 @@ h2 {
     padding: 6px 0 0 1px ;
     margin: 0 5px 5px 5px;
     list-style-type: none;
-    /* background-color: rgb(233, 233, 233); */
+}
+.nav-start { /* ul */
+    margin: 0 8px 4px 0;
+}
+.nav-end { /* ul */
+    margin: 0 0 4px 8px;
 }
 
 .nav-link { /* ul li */
     display: table;
-    margin: 0 8px 4px 0;
     padding: 0;
     border: solid black 1px;
     border-radius: 2px;
-    width: max-content;
+    min-width: max-content;
+    /* width: min-content; */
     text-decoration : none;
-    box-shadow: -2px -2px 5px 0px black;
+    box-shadow: -2px -2px 5px 0px rgb(250, 177, 177);
     background-color: rgb(233, 233, 233);
 }
 
@@ -47,6 +63,7 @@ h2 {
     color: crimson;
     padding: 4px;
     font-weight: 600;
+    min-width: max-content;
 }
 
 /*******    BODY   ********/
@@ -197,6 +214,7 @@ h2 {
     padding: 6px 0 0 1px ;
     margin: 25px 1px 5px 1px;
     list-style-type: none;
+    min-width: max-content;
 }
 
 .btn-link-big { /* ul li */
@@ -261,5 +279,11 @@ h2 {
 }
 
 .blue {
-    color: rgb(63, 52, 158);
+    color: rgb(75, 64, 182);
+}
+.red {
+    color: crimson;
+}
+.green {
+    color: rgb(49, 160, 64);
 }

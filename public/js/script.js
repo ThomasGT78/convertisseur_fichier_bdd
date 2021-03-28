@@ -35,9 +35,9 @@ var titleText = title[0].innerText
 
 function init (titleText) {
     console.log(titleText);
-    if (titleText == "choixTableConvert.ejs"){
+    if (titleText == "tableExport"){
         initExport();
-    } else if (titleText == "choixTableInsert.ejs") {
+    } else if (titleText == "tableImport") {
         initImport();
     }
 }

@@ -8,7 +8,7 @@ module.exports = function (req, res, connexion, BDchoisie) {
 
     var tableChoisie = req.body.table_name;
     var formatToConvert = req.body.formatToConvert;
-    var separateur = req.body.separateur;
+    var separateurExport = req.body.separateurExport;
     //console.log('CONSOLE LIGNE 164');
     //console.log(BDchoisie);
     //console.log(tableChoisie);
@@ -29,7 +29,7 @@ module.exports = function (req, res, connexion, BDchoisie) {
             //var nomTable = fields[0].table
             if (formatToConvert === 'txt' || formatToConvert === 'csv') {
 
-                convertToTxtCsv(tableChoisie, formatToConvert, separateur, rows, fields, message)
+                convertToTxtCsv(tableChoisie, formatToConvert, separateurExport, rows, fields, message)
 
             } // if TXT ou CSV
 
@@ -70,7 +70,7 @@ module.exports = function (req, res, connexion, BDchoisie) {
                 *   CRÉATION DU FICHIER    *
                 ***************************/
 
-                fs.writeFile(`table_${tableChoisie}.${formatToConvert}`, tabJson, function (err) {
+                fs.writeFile(`table/table_${tableChoisie}.${formatToConvert}`, tabJson, function (err) {
                     if (err) {
                         return console.error(err);
                     }
@@ -86,10 +86,10 @@ module.exports = function (req, res, connexion, BDchoisie) {
             }
 
         } // else pas d'erreur
-        console.log("message")
-        console.log(message)
+        var messageConnexion = `Vous êtes connecté avec le user <span class="blue">« ${connectUser} »</span>  et sur le port <span class="blue">« ${connectPort} »</span> de l'hôte <span class="blue">« ${connectHost} »</span>`;
+
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        res.render('validationConvert.ejs', { message: message });
+        res.render('menu.ejs', { messageValidation: message, title: title, messageConnexion: messageConnexion });
     }); /// query Sélection de la Table à modifier
 
 }

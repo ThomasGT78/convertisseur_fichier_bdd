@@ -2,6 +2,9 @@
     <%- include ('partials/title') %>
 
     <div class="container">
+        
+        <h3 class="msgValidation"><%- messageValidation %></h3>
+
         <h3><%- messageConnexion %></h3>
 
         <h2>Que voulez-vous faire?</h2>
@@ -12,13 +15,13 @@
         
         <ul class="btn-big">
             <li class="btn-link-big">
-                <a href="/CRUD">Modifier une BDD</a>
+                <a href="/bddExport">BDD => fichier<br>(Export)</a>
             </li>
             <li class="btn-link-big">
-                <a href="/bddExport">BDD => fichier</a>
+                <a href="/bddImport">Fichier => BDD<br>(Import)</a>
             </li>
             <li class="btn-link-big">
-                <a href="/bddImport">Fichier => BD</a>
+                <a href="/CRUD">Modifier une BDD<br>(CRUD)</a>
             </li>
         </ul>
     </div>
